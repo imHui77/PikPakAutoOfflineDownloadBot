@@ -19,34 +19,37 @@
 因为部分命令删除文件的机制较强劲，容易在使用中操作不慎导致误删。
 
 # 部署
-
-将`pikpakTgBot.py`、`config.py`、`requirements.txt`、`__init__.py`文件下载到本地同一目录下。
-
-安装依赖：
-
-```shell
-pip install -r requirements.txt
+暫時沒有改太多，不知道多帳號支不支援。
+```docker
+docker build -t pikpaktgbot . --no-cache
+```
+# 執行
+```docker
+docker run -d \
+    --name pikpaktgbot \
+    -e TOKEN="" \
+    -e USER="" \
+    -e PASSWORD="" \
+    -e ARIA2_HTTPS=False \
+    -e ARIA2_HOST=localhost \
+    -e ARIA2_PORT=6800 \
+    -e ARIA2_SECRET="" \
+    -e ARIA2_DOWNLOAD_PATH=/downloads \
+    pikpaktgbot
 ```
 
-配置`config.py`文件信息：
+| 參數  | 說明                                                |
+|-----|---------------------------------------------------|
+|TOKEN | TG機器人的Token，使用@BotFather建立                        |
+|USER| PikPak账号                                          |
+|PASSWORD| PikPak密碼                                          |
+|ARIA2_HTTPS| ARIA2是否使用https(True or False)                     |
+|ARIA2_HOST| ARIA2的主机地址(如果使用https，则为https://aria2.example.com) |
+|ARIA2_PORT| ARIA2的端口号(如果使用https，则为443)                        |
+|ARIA2_SECRET| ARIA2的密碼                                          |
+|ARIA2_DOWNLOAD_PATH| ARIA2下載目錄                                         |
+|TG_API_URL| TG API的URL(可不填使用預設)                               |
 
-```python
-# TG机器人的令牌，tg找@BotFather创建机器人即可获取
-TOKEN = 'token'
-# pikpak账号，可以为手机号、邮箱，支持任意多账号
-USER = ["example_user1", "example_user2"]
-# 账号对应的密码，注意与账号顺序对应！！！
-PASSWORD = ["example_password1", "example_password2"]
-# 以下分别为aria2 RPC的协议（http/https）、host、端口、密钥
-ARIA2_HTTPS = False
-ARIA2_HOST = "example.aria2.host"
-ARIA2_PORT = "port"
-ARIA2_SECRET = "secret"
-# aria2下载根目录
-ARIA2_DOWNLOAD_PATH = "/mnt/sda1/aria2/pikpak"
-# 可以自定义TG API，也可以保持默认
-TG_API_URL = 'https://api.telegram.org/'
-```
 
 最后：
 
